@@ -1,7 +1,7 @@
-# keyurshingala.github.io
+
 
 public File getFileOfBit(Bitmap mBitmap) {
-        
+
         File myDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), getString(R.string.app_name));
 
         if (!myDir.exists()) myDir.mkdirs();
