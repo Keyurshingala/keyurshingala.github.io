@@ -1,8 +1,9 @@
 
 
 
-//todo AsyncTask Alternative
-public File getFileOfBit(Bitmap mBitmap) {
+//Bitmap to File
+        
+      public File getFileOfBit(Bitmap mBitmap) {
 
         File myDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), getString(R.string.app_name));
 
@@ -34,22 +35,24 @@ public File getFileOfBit(Bitmap mBitmap) {
     
 
 //todo AsyncTask Alternative
-progress.show();
-ExecutorService executorService = Executors.newSingleThreadExecutor();
-executorService.execute(new Runnable() {
-    public void run() {
-        //do in background
-        getContactList();
-        System.out.println("Asynchronous task");
-        
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progress.dismiss();
-                Log.i(TAG, "run: " + contactList.size());
-                //post Execute
-            }
-        });
-    }
-});
-// executorService.shutdown();
+
+            progress.show();
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.execute(new Runnable() {
+                public void run() {
+                    //do in background
+                    getContactList();
+                    System.out.println("Asynchronous task");
+    
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progress.dismiss();
+                            Log.i(TAG, "run: " + contactList.size());
+                            //post Execute
+                        }
+                    });
+                }
+            });
+            // executorService.shutdown();
