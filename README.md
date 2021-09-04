@@ -116,3 +116,27 @@
         .transform(new BlurTransformation(context))
         .into(bind.blureView);
 
+
+//Backround Blur
+
+        implementation 'com.eightbitlab:blurview:1.6.6'
+
+         <eightbitlab.com.blurview.BlurView
+                        android:id="@+id/blureView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+        View decorView = activity.getWindow().getDecorView();
+        //ViewGroup you want to start blur from. Choose root as close to BlurView in hierarchy as possible.
+        ViewGroup rootView = (ViewGroup) decorView.findViewById(android.R.id.content);
+        //Set drawable to draw in the beginning of each blurred frame (Optional).
+        //Can be used in case your layout has a lot of transparent space and your content
+        //gets kinda lost after after blur is applied.
+        Drawable windowBackground = decorView.getBackground();
+
+        bind.blureView.setupWith(bind.getRoot())
+                 .setFrameClearDrawable(windowBackground)
+                 .setBlurAlgorithm(new RenderScriptBlur(activity))
+                 .setBlurRadius(10f) //radius
+                 .setBlurAutoUpdate(true)
+                 .setHasFixedTransformationMatrix(false); // Or false if it's in a scrolling container or might be animated
