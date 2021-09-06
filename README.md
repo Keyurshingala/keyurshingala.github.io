@@ -140,3 +140,46 @@
                  .setBlurRadius(10f) //radius
                  .setBlurAutoUpdate(true)
                  .setHasFixedTransformationMatrix(false); // Or false if it's in a scrolling container or might be animated
+                 
+                 
+//Full Screen
+             
+     //in values/themes.xml
+     <style name="Theme.App" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <!--        status bar-->
+        <item name="colorPrimaryDark">@color/st</item>
+        <!--        button-->
+        <item name="colorPrimary">@color/btn</item>
+        <!--        courser  switch  checkBox-->
+        <item name="colorAccent">@color/accent</item>
+     </style>
+
+    <style name="Theme.WindowFullscreen" parent="Theme.App">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+    
+    //in AndroidManifest.xml
+    <application
+        ...
+        android:theme="@style/Theme.App">
+                 
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.WindowFullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".LogInActivity"
+            android:exported="true"
+            android:theme="@style/Theme.WindowFullscreen">
+        </activity>
+      
+    </application>
+    
