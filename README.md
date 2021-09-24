@@ -57,6 +57,37 @@
             });
             // executorService.shutdown();
             
+//selector for Rg
+
+        <?xml version="1.0" encoding="utf-8"?>
+        <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <item android:state_checked="true">
+                <shape>
+                    <solid android:color="@color/blue" />
+                    <corners android:radius="@dimen/_12sdp" />
+                    <padding android:bottom="@dimen/_8sdp" android:left="@dimen/_18sdp" android:right="@dimen/_18sdp" android:top="@dimen/_8sdp" />
+                </shape>
+            </item>
+
+            <item android:state_pressed="true">
+                <shape>
+                    <solid android:color="#200C1947" />
+                    <corners android:radius="@dimen/_12sdp" />
+                    <padding android:bottom="@dimen/_8sdp" android:left="@dimen/_18sdp" android:right="@dimen/_18sdp" android:top="@dimen/_8sdp" />
+                </shape>
+
+            </item>
+
+            <item android:state_checked="false">
+                <shape>
+                    <solid android:color="@color/btn_def" />
+                    <corners android:radius="@dimen/_12sdp" />
+                    <padding android:bottom="@dimen/_8sdp" android:left="@dimen/_18sdp" android:right="@dimen/_18sdp" android:top="@dimen/_8sdp" />
+                </shape>
+            </item>
+        </selector>
+            
 //Image Blure With Picasso
 
         implementation 'com.squareup.picasso:picasso:2.71828'
