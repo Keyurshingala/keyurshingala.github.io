@@ -44,207 +44,7 @@
                 android:paddingEnd="@dimen/_12sdp"
                 android:paddingBottom="@dimen/_8sdp"
                 android:visibility="invisible"
-                tools:visibility="visible">
-
-                <TextView
-                    android:id="@+id/tvTotalUsableAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:fontFamily="@font/ns_semi_bold"
-                    android:text="TOTAL BALANCE"
-                    android:textSize="@dimen/_10sdp" />
-
-                <TextView
-                    android:id="@+id/tvBalance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:fontFamily="@font/ns_semi_bold"
-                    android:text="-"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAddCash"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:backgroundTint="@color/btn_green"
-                    android:text="ADD CASH"
-                    android:textColor="@color/white" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/_minus16sdp"
-                    android:layout_marginEnd="@dimen/_minus16sdp"
-                    android:background="@color/gray_d" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_8sdp">
-
-                    <TextView
-                        android:id="@+id/etcAdded"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_2sdp"
-                        android:fontFamily="@font/ns_reguler"
-                        android:text="AMOUNT ADDED (UNUTILISED)"
-                        android:textSize="@dimen/_8sdp" />
-
-                    <TextView
-                        android:id="@+id/tvAdded"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/etcAdded"
-                        android:fontFamily="@font/ns_bold"
-                        android:text="-"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_10sdp" />
-
-                    <ImageView
-                        android:id="@+id/ivTipAmountAdded"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:layout_alignTop="@+id/etcAdded"
-                        android:layout_alignBottom="@id/tvAdded"
-                        android:layout_alignParentEnd="true"
-                        android:padding="@dimen/_6sdp"
-                        android:src="@drawable/ic_info"
-                        app:tint="@color/blue" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/_minus16sdp"
-                    android:layout_marginEnd="@dimen/_minus16sdp"
-                    android:background="@color/gray_d" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_8sdp">
-
-                    <TextView
-                        android:id="@+id/etcWins"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_2sdp"
-                        android:fontFamily="@font/ns_reguler"
-                        android:text="WINNINGS"
-                        android:textSize="@dimen/_8sdp" />
-
-                    <TextView
-                        android:id="@+id/tvWins"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/etcWins"
-
-                        android:fontFamily="@font/ns_bold"
-                        android:text="-"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_10sdp" />
-
-                    <ImageView
-                        android:id="@+id/ivTipWins"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:layout_alignTop="@+id/etcWins"
-                        android:layout_alignBottom="@id/tvWins"
-                        android:layout_alignParentEnd="true"
-                        android:padding="@dimen/_6sdp"
-                        android:src="@drawable/ic_info"
-                        app:tint="@color/blue" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/_minus16sdp"
-                    android:layout_marginEnd="@dimen/_minus16sdp"
-                    android:background="@color/gray_d" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_4sdp">
-
-                    <TextView
-                        android:id="@+id/etcCb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_2sdp"
-                        android:fontFamily="@font/ns_reguler"
-                        android:text="CASH BONUS"
-                        android:textSize="@dimen/_8sdp" />
-
-                    <TextView
-                        android:id="@+id/tvCashBonus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/etcCb"
-                        android:fontFamily="@font/ns_bold"
-                        android:text="-"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_10sdp" />
-
-                    <ImageView
-                        android:id="@+id/ivTipBonus"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:layout_alignTop="@+id/etcCb"
-                        android:layout_alignBottom="@id/tvCashBonus"
-                        android:layout_alignParentEnd="true"
-                        android:padding="@dimen/_6sdp"
-                        android:src="@drawable/ic_info"
-                        app:tint="@color/blue" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:background="@drawable/bg_green_border_only"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="@dimen/_48sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:padding="@dimen/_6sdp"
-                        android:src="@drawable/ic_dollar" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/ns_semi_bold"
-                        android:text="Maximun usable Cash Bonus per match = 10% of entry Frees"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_10sdp" />
-
-                    <ImageView
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:padding="@dimen/_8sdp"
-                        android:src="@drawable/ic_close_dialog"
-                        app:tint="@color/gray_d" />
-
-                </LinearLayout>
-
+                tools:visibility="visible">          
 
                 <ImageView
                     android:id="@+id/ivClose"
@@ -267,23 +67,23 @@
 </LinearLayout>
 
     private void showWallet() {
-        dialogWallet = new Dialog(this);
+        dialog = new Dialog(this);
         bind = WalletDialogBinding.inflate(getLayoutInflater());
-        dialogWallet.setContentView(bind.getRoot());
+        dialog.setContentView(bind.getRoot());
 
         int width = WindowManager.LayoutParams.MATCH_PARENT;
         int height = WindowManager.LayoutParams.WRAP_CONTENT;
-        dialogWallet.getWindow().setLayout(width, height);
+        dialog.getWindow().setLayout(width, height);
 
-        dialogWallet.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        dialogWallet.setCancelable(true);
+        dialog.setCancelable(true);
 
         bind.ivClose.setOnClickListener(v -> {
-            dialogWallet.dismiss();
+            dialog.dismiss();
         });
 
-        dialogWallet.show();
+        dialog.show();
 
         //network call if needed
     }
