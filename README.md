@@ -266,7 +266,7 @@
 
 </LinearLayout>
 
-private void showWallet() {
+    private void showWallet() {
         dialogWallet = new Dialog(this);
         bind = WalletDialogBinding.inflate(getLayoutInflater());
         dialogWallet.setContentView(bind.getRoot());
