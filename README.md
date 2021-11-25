@@ -2,69 +2,69 @@
 //Dialog with Snackbar
 
 
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
-    android:orientation="vertical">
-
-    <com.google.android.material.card.MaterialCardView
+    <?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16sdp"
-        app:cardCornerRadius="@dimen/_4sdp"
-        app:cardElevation="@dimen/_2sdp"
-        app:cardUseCompatPadding="true">
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
 
-        <RelativeLayout
-
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_4sdp"
+            app:cardElevation="@dimen/_2sdp"
+            app:cardUseCompatPadding="true">
 
-            <ProgressBar
-                android:id="@+id/pb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:visibility="gone"
-                tools:visibility="visible" />
+            <RelativeLayout
 
-            <LinearLayout
-                android:id="@+id/ll"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/_12sdp"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_12sdp"
-                android:paddingBottom="@dimen/_8sdp"
-                android:visibility="invisible"
-                tools:visibility="visible">          
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/ivClose"
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="@dimen/_minus8sdp"
-                    android:src="@drawable/ic_close_wallet"
-                    app:tint="@color/gray_d" />
-            </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/pb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
-                android:id="@+id/clVisibleRoot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/ll" />
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <LinearLayout
+                    android:id="@+id/ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/_12sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_12sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:visibility="invisible"
+                    tools:visibility="visible">          
 
-</LinearLayout>
+                    <ImageView
+                        android:id="@+id/ivClose"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/_minus8sdp"
+                        android:src="@drawable/ic_close_wallet"
+                        app:tint="@color/gray_d" />
+                </LinearLayout>
+
+                <androidx.coordinatorlayout.widget.CoordinatorLayout
+                    android:id="@+id/clVisibleRoot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/ll" />
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
 
     private void showWallet() {
         dialog = new Dialog(this);
