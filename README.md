@@ -1,4 +1,68 @@
 
+//To Get Pic From Camera Full Size
+
+            manifest
+            <application...
+             <provider
+                        android:name="androidx.core.content.FileProvider"
+                        android:authorities="your packege name.fileprovider"
+                        android:exported="false"
+                        android:grantUriPermissions="true">
+                        <meta-data
+                            android:name="android.support.FILE_PROVIDER_PATHS"
+                            android:resource="@xml/file_paths" />
+                    </provider>
+             </application>
+
+           MainActivity
+           private static final int REQUEST_IMAGE_CAPTURE = 111;
+           String currentPhotoPath;
+
+           private void dispatchTakePictureIntent() {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (photoFile != null) {
+                        Uri photoURI = FileProvider.getUriForFile(this, "your packeg name.fileprovider", photoFile);
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                    }
+                }
+            }
+
+            private File createImageFile() throws IOException {
+                // Create an image file name
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                String imageFileName = "JPEG_" + timeStamp + "_";
+                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                File image = File.createTempFile(imageFileName/* prefix */,".jpg"/* suffix */,storageDir/* directory */);
+
+                // Save a file: path for use with ACTION_VIEW intents
+                currentPhotoPath = image.getAbsolutePath();
+                return image;
+            }
+
+            @Override
+            protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+                super.onActivityResult(requestCode, resultCode, data);
+                if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+                    ((ImageView) findViewById(R.id.iv)).setImageURI(Uri.fromFile(new File(currentPhotoPath)));
+                }
+            }
+
+        res>xml>file_paths.xml
+        <?xml version="1.0" encoding="utf-8"?>
+        <paths xmlns:android="http://schemas.android.com/apk/res/android">
+            <external-files-path name="my_images" path="Pictures" />
+        </paths>
+
+
 //Dialog with Snackbar
 
 
