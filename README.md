@@ -19,39 +19,26 @@
            String currentPhotoPath;
 
            private void dispatchTakePictureIntent() {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     File photoFile = null;
                     try {
-                        photoFile = createImageFile();
-                    } catch (IOException e) {
+                        photoFile = File.createTempFile("Img"/*File Name prefix */, ".jpg"/*Extension suffix */);
+                        currentPhotoPath = photoFile.getAbsolutePath();
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     if (photoFile != null) {
-                        Uri photoURI = FileProvider.getUriForFile(this, getPackageName()+".provider", photoFile);
+                        Uri photoURI = FileProvider.getUriForFile(this, getPackageName() + ".provider", photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                     }
-                }
-            }
-
-            private File createImageFile() throws IOException {
-                // Create an image file name
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String imageFileName = "JPEG_" + timeStamp + "_";
-                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-                File image = File.createTempFile(imageFileName/* prefix */,".jpg"/* suffix */,storageDir/* directory */);
-
-                // Save a file: path for use with ACTION_VIEW intents
-                currentPhotoPath = image.getAbsolutePath();
-                return image;
             }
 
             @Override
             protected void onActivityResult(int requestCode, int resultCode, Intent data) {
                 super.onActivityResult(requestCode, resultCode, data);
                 if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+                    Log.i(TAG, currentPhotoPath); //  /data/user/0/com.example.xyz/cache/cam_img**some_auto_genreted_numers**.jpg
                     ((ImageView) findViewById(R.id.iv)).setImageURI(Uri.fromFile(new File(currentPhotoPath)));
                 }
             }
