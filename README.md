@@ -5,7 +5,7 @@
             <application...
              <provider
                         android:name="androidx.core.content.FileProvider"
-                        android:authorities="your packege name.fileprovider"
+                        android:authorities="${applicationId}.provider"
                         android:exported="false"
                         android:grantUriPermissions="true">
                         <meta-data
@@ -29,7 +29,7 @@
                         e.printStackTrace();
                     }
                     if (photoFile != null) {
-                        Uri photoURI = FileProvider.getUriForFile(this, "your packeg name.fileprovider", photoFile);
+                        Uri photoURI = FileProvider.getUriForFile(this, getPackageName()+".provider", photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                     }
