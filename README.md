@@ -368,8 +368,3 @@
         </activity>
       
     </application>
-    ![—Pngtree—no result search icon_6511543](https://user-images.githubusercontent.com/76246419/166225250-7a3519c1-eab8-4062-8016-88fec66deca7.png)
-
-    
-    
-    
