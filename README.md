@@ -1,3 +1,46 @@
+//save pdf
+
+            public File savePdf(Bitmap bitmap) {
+                    PdfDocument document = new PdfDocument();
+                    PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(bitmap.getWidth(), bitmap.getHeight(), 1).create();
+                    PdfDocument.Page page = document.startPage(pageInfo);
+
+                    Canvas canvas = page.getCanvas();
+                    Paint paint = new Paint();
+                    paint.setColor(Color.parseColor("#ffffff"));
+                    canvas.drawPaint(paint);
+
+                    bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
+
+                    paint.setColor(Color.BLUE);
+                    canvas.drawBitmap(bitmap, 0, 0, null);
+                    document.finishPage(page);
+
+                    File myDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), getString(R.string.app_name));
+
+                    if (!myDir.exists()) myDir.mkdirs();
+
+                    String targetPdf = System.currentTimeMillis() + ".pdf";
+
+                    File filePath = new File(myDir, targetPdf);
+
+                    if (filePath.exists()) filePath.delete();
+
+                    try {
+                        document.writeTo(new FileOutputStream(filePath));
+                    } catch (Exception e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+
+                    document.close();
+
+                    return filePath;
+                }
+
+
+
+
+
 
 //To Get Pic From Camera Full Size
 
@@ -158,33 +201,30 @@
 
 //Bitmap to File
         
-      public File getFileOfBit(Bitmap mBitmap) {
-
+      public File saveBitmap(Bitmap bitmap, Bitmap.CompressFormat format, int quality) {
         File myDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), getString(R.string.app_name));
 
         if (!myDir.exists()) myDir.mkdirs();
 
-        String fileName = System.currentTimeMillis() / 1000 + ".jpeg";
+        String fileName;
+        if (format == Bitmap.CompressFormat.JPEG)
+            fileName = System.currentTimeMillis() + ".jpeg";
+        else
+            fileName = System.currentTimeMillis() + ".png";
 
-        File file = null;
+        File file = new File(myDir, fileName);
+        if (file.exists()) file.delete();
 
         try {
-            file = new File(myDir, fileName);
-            if (file.exists())
-                file.delete();
-
             FileOutputStream out = new FileOutputStream(file);
-            mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, out);
+            bitmap.compress(format, quality, out);
             out.flush();
             out.close();
 
-            Log.e(TAG, "getFileOfBit: " + file.getPath());
-            return file;
+            MediaScannerConnection.scanFile(this, new String[]{file.getPath()}, new String[]{"image/jpeg", "image/png"}, null);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
-
-        Log.e(TAG, "getFileOfBit: " + file.getPath());
         return file;
     }
     
