@@ -1,4 +1,22 @@
-//save pdf
+read asset file from asset file path
+
+            public String readAssetsFile(String assetFilePath) {
+                    String jsonString = "";
+                    try {
+                        InputStream is = getAssets().open(assetFilePath);
+                        byte[] buffer = new byte[is.available()];
+                        is.read(buffer);
+                        is.close();
+                        jsonString = new String(buffer, StandardCharsets.UTF_8);
+                    } catch (Exception e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                    return jsonString;
+                }
+
+
+
+//save pdf from bitmap
 
             public File savePdf(Bitmap bitmap) {
                     PdfDocument document = new PdfDocument();
