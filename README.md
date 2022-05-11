@@ -1,3 +1,19 @@
+//simple animation
+
+            public void slideUpFad(View v) {
+                    v.setVisibility(View.VISIBLE);
+                    v.setTranslationY(v.getHeight());
+                    v.setAlpha(0f);
+                    v.animate().setDuration(600)
+                            .translationY(0)
+                            .setListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                }
+                            }).alpha(1f).start();
+                }
+
 //Unsplash Api Calling
 
             private const val BASE_URL = "https://api.unsplash.com/"
