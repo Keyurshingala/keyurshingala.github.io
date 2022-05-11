@@ -1,4 +1,27 @@
-read asset file from asset file path
+//Unsplash Api Calling
+
+            private const val BASE_URL = "https://api.unsplash.com/"
+
+            const val AccessKey = "akYdbrQ_RcwiLMcEkHuZND-2FUTsHJ25k42aaaO67N4"
+
+            object UnsplashClient {
+                val service: SearchApi = Retrofit.Builder()
+                        .baseUrl(BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build().create(SearchApi::class.java)
+            }
+
+            interface SearchApi {
+                @GET("search/photos")
+                fun getSearchPhotos(@Query("client_id") clientId: String,
+                                    @Query("orientation") orientation: String,
+                                    @Query("query") searchItem: String?,
+                                    @Query("per_page") itemPerPage: Int): Call<SearchPhoto>
+            }
+
+
+
+//read asset file from asset file path
 
             public String readAssetsFile(String assetFilePath) {
                     String jsonString = "";
