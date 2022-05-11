@@ -1,3 +1,17 @@
+//view to bitmap 
+
+     /**
+     *if dose not work call this method inside View.post() method
+     **/
+    public Bitmap bitmapFromView(View v) {
+        Bitmap b = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
+        v.layout(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
+        v.draw(new Canvas(b));
+        return b;
+    }
+
+
+
 //simple animation
 
             public void slideUpFad(View v) {
