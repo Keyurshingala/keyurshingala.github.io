@@ -1,3 +1,180 @@
+//Api Client In Test Be Carefull
+
+          public class ApiClient<T> {
+
+              Activity activity;
+              Dialog progress;
+              DialogNoNet dialogNoNet;
+
+              public ServiceGenerator<T> serviceGenerator;
+
+              public interface ServiceGenerator<T> {
+                  void OnSuccess(T obj);
+              }
+
+              public void callApiWithDialog(Activity activity, View root, Call<T> apiCall, ServiceGenerator<T> serviceGenerator) {
+                  this.activity = activity;
+                  this.serviceGenerator = serviceGenerator;
+
+                  if (hasInternetConnect()) {
+                      dismissNoNet();
+                      showProgress();
+                      apiCall.clone().enqueue(new Callback<T>() {
+                          @Override
+                          public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
+                              new Handler(Looper.getMainLooper()).postDelayed(() -> dismissProgress(), 200);
+
+                              if (response.isSuccessful() && response.body() != null) {
+                                  serviceGenerator.OnSuccess(response.body());
+
+                              } else {
+                                  Snackbar.make(root, somethingWentWrong, Snackbar.LENGTH_INDEFINITE)
+                                          .setAction("Try Again", view -> callApiWithDialog(activity, root, apiCall, serviceGenerator)).show();
+                              }
+                          }
+
+                          @Override
+                          public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
+                              dismissProgress();
+                              t.printStackTrace();
+
+                              Snackbar.make(root, somethingWentWrong, Snackbar.LENGTH_INDEFINITE)
+                                      .setAction("Try Again", view -> callApiWithDialog(activity, root, apiCall, serviceGenerator)).show();
+
+                          }
+                      });
+
+                  } else {
+                      showNoNet();
+                      dialogNoNet.setOnRetryClickListener(new DialogNoNet.RootClickEvent() {
+                          @Override
+                          public void onRetryClick(@NonNull Dialog dialog) {
+                              callApiWithDialog(activity, root, apiCall, serviceGenerator);
+                          }
+                      });
+                  }
+              }
+
+              public void callApiWithBar(Activity activity, View root, ProgressBar pb, Call<T> apiCall, ServiceGenerator<T> serviceGenerator) {
+                  this.activity = activity;
+                  this.serviceGenerator = serviceGenerator;
+
+                  if (hasInternetConnect()) {
+                      dismissNoNet();
+                      pb.setVisibility(View.VISIBLE);
+                      apiCall.clone().enqueue(new Callback<T>() {
+                          @Override
+                          public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
+                              pb.setVisibility(View.GONE);
+
+                              if (response.isSuccessful() && response.body() != null) {
+                                  serviceGenerator.OnSuccess(response.body());
+
+                              } else {
+                                  Snackbar.make(root, somethingWentWrong, Snackbar.LENGTH_INDEFINITE)
+                                          .setAction("Try Again", view -> callApiWithBar(activity, root, pb, apiCall, serviceGenerator)).show();
+                              }
+                          }
+
+                          @Override
+                          public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
+                              pb.setVisibility(View.GONE);
+                              t.printStackTrace();
+
+                              Snackbar.make(root, somethingWentWrong, Snackbar.LENGTH_INDEFINITE)
+                                      .setAction("Try Again", view -> callApiWithBar(activity, root, pb, apiCall, serviceGenerator)).show();
+
+                          }
+                      });
+
+                  } else {
+                      showNoNet();
+                      dialogNoNet.setOnRetryClickListener(new DialogNoNet.RootClickEvent() {
+                          @Override
+                          public void onRetryClick(@NonNull Dialog dialog) {
+                              callApiWithBar(activity, root, pb, apiCall, serviceGenerator);
+                          }
+                      });
+                  }
+              }
+
+
+              public static Api getService() {
+                  HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();     //todo remove this line in production
+                  interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);               //todo remove this line in production
+
+                  OkHttpClient okClient = new OkHttpClient.Builder()
+                          .addInterceptor(chain -> {
+                              Request originalRequest = chain.request();
+                              Request.Builder requestBuilder = originalRequest.newBuilder()
+                                      .addHeader("Cache-Control", "no-cache")
+                                      .method(originalRequest.method(), originalRequest.body());
+                              Request request = requestBuilder.build();
+                              return chain.proceed(request);
+                          })
+                          .addInterceptor(interceptor)                                    //todo remove this line in production
+                          .connectTimeout(10, TimeUnit.SECONDS)
+                          .readTimeout(10, TimeUnit.SECONDS)
+                          .build();
+
+
+                  return new Retrofit.Builder()
+                          .baseUrl(cons.BASE_URL)
+                          .addConverterFactory(GsonConverterFactory.create())
+                          .client(okClient)
+                          .build()
+                          .create(Api.class);
+              }
+
+              private void initNoNetDialog() {
+                  dialogNoNet = new DialogNoNet(activity);
+              }
+
+              private void showNoNet() {
+                  if (dialogNoNet == null) initNoNetDialog();
+                  dialogNoNet.show();
+              }
+
+              private void dismissNoNet() {
+                  if (dialogNoNet != null) dialogNoNet.dismiss();
+              }
+
+              private void initProgressDialog() {
+                  progress = new Dialog(activity);
+                  progress.setContentView(DialogProgressBinding.inflate(activity.getLayoutInflater()).getRoot());
+                  int widthAndHeight = WindowManager.LayoutParams.MATCH_PARENT;
+                  progress.getWindow().setLayout(widthAndHeight, widthAndHeight);
+                  progress.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                  progress.setCancelable(false);
+              }
+
+              public void showProgress() {
+                  if (progress == null) initProgressDialog();
+                  if (!progress.isShowing()) progress.show();
+              }
+
+              public void dismissProgress() {
+                  if (progress != null && progress.isShowing()) progress.dismiss();
+              }
+
+              public boolean hasInternetConnect() {
+                  boolean isWifiConnected = false;
+                  boolean isMobileConnected = false;
+
+                  NetworkInfo[] netInfo = ((ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE)).getAllNetworkInfo();
+
+                  for (NetworkInfo ni : netInfo) {
+                      if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                          if (ni.isConnected()) isWifiConnected = true;
+                      if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                          if (ni.isConnected()) isMobileConnected = true;
+                  }
+                  return isWifiConnected || isMobileConnected;
+              }
+          }
+
+
+
 //view to bitmap 
 
      /**
