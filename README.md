@@ -1,17 +1,79 @@
+//save vide from tree uri
+
+          private void saveVideoFromTreeUri(Uri uri) {
+
+                  String videoFileName = "video_" + System.currentTimeMillis() + ".mp4";
+
+                  ContentValues valuesvideos;
+                  valuesvideos = new ContentValues();
+                  valuesvideos.put(MediaStore.Video.Media.RELATIVE_PATH, "Movies/");
+                  valuesvideos.put(MediaStore.Video.Media.TITLE, videoFileName);
+                  valuesvideos.put(MediaStore.Video.Media.DISPLAY_NAME, videoFileName);
+                  valuesvideos.put(MediaStore.Video.Media.MIME_TYPE, "video/mp4");
+                  valuesvideos.put(MediaStore.Video.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
+                  valuesvideos.put(MediaStore.Video.Media.DATE_TAKEN, System.currentTimeMillis());
+                  valuesvideos.put(MediaStore.Video.Media.IS_PENDING, 1);
+                  ContentResolver resolver = getContentResolver();
+                  Uri collection = MediaStore.Video.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY); 
+                  //all video files on primary external    storage
+                  Uri uriSavedVideo = resolver.insert(collection, valuesvideos);
+
+                  ParcelFileDescriptor pfd;
+
+                  try {
+                      pfd = getContentResolver().openFileDescriptor(uriSavedVideo, "w");
+
+                      assert pfd != null;
+                      FileOutputStream out = new FileOutputStream(pfd.getFileDescriptor());
+
+                      // Get the already saved video as fileinputstream from here
+                      InputStream in = getContentResolver().openInputStream(uri);
+
+                      byte[] buf = new byte[8192];
+
+                      int len;
+                      int progress = 0;
+                      while ((len = in.read(buf)) > 0) {
+                          progress = progress + len;
+                          out.write(buf, 0, len);
+                      }
+                      out.close();
+                      in.close();
+                      pfd.close();
+                      valuesvideos.clear();
+                      valuesvideos.put(MediaStore.Video.Media.IS_PENDING, 0);
+                      valuesvideos.put(MediaStore.Video.Media.IS_PENDING, 0); //only your app can see the files until pending is turned into 0
+
+                      getContentResolver().update(uriSavedVideo, valuesvideos, null, null);
+                      File file = new File(Environment.getExternalStorageDirectory() + "/Movies/" + videoFileName);
+                      Log.e(TAG, "saveVideo: " + file.getPath());
+                  } catch (Exception e) {
+                      e.printStackTrace();
+                      Log.e(TAG, "saveVideo: " + e.getMessage());
+                  }
+              }
+
+
+
 //open Dir with Doc Tree
 
           if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
-                          Uri finalUri = DocumentFile
-                                  .fromTreeUri(
-                                          StatusActivity.this,                                                                        Uri.parse("content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fmedia%2Fcom.whatsapp%2FWhatsApp%2FMedia%2F.Statuses")
-                                  ).getUri();
+                if (DocumentFile.fromTreeUri(StatusActivity.this, Uri.parse(pref.getString("uri"))).canRead()) {
 
-                          launcher.launch(
-                                  new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-                                          .putExtra(DocumentsContract.EXTRA_INITIAL_URI, finalUri)
-                                          .addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION |                                                                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-                          );
-                      }
+                } else {
+                    Uri finalUri = DocumentFile
+                            .fromTreeUri(
+                                    StatusActivity.this,
+                            Uri.parse("content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fmedia%2Fcom.whatsapp%2FWhatsApp%2FMedia%2F.Statuses")
+                            ).getUri();
+
+                    launcher.launch(
+                            new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+                                    .putExtra(DocumentsContract.EXTRA_INITIAL_URI, finalUri)
+                                    .addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                    );
+                }
+            }
                       
                       
 
