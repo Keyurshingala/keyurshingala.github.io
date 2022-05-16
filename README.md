@@ -1,3 +1,20 @@
+//open Dir with Doc Tree
+
+          if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+                          Uri finalUri = DocumentFile
+                                  .fromTreeUri(
+                                          StatusActivity.this,                                                                        Uri.parse("content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fmedia%2Fcom.whatsapp%2FWhatsApp%2FMedia%2F.Statuses")
+                                  ).getUri();
+
+                          launcher.launch(
+                                  new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+                                          .putExtra(DocumentsContract.EXTRA_INITIAL_URI, finalUri)
+                                          .addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION |                                                                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                          );
+                      }
+                      
+                      
+
 //Api Client In Test Be Carefull
 
           public class ApiClient<T> {
