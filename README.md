@@ -1,58 +1,52 @@
 //save vide from tree uri
 
           private void saveVideoFromTreeUri(Uri uri) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            String videoName = System.currentTimeMillis() + ".mp4";
 
-                  String videoFileName = "video_" + System.currentTimeMillis() + ".mp4";
+            ContentValues valuesvideos = new ContentValues();
+            valuesvideos.put(MediaStore.Video.Media.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
+            valuesvideos.put(MediaStore.Video.Media.TITLE, videoName);
+            valuesvideos.put(MediaStore.Video.Media.DISPLAY_NAME, videoName);
+            valuesvideos.put(MediaStore.Video.Media.MIME_TYPE, "video/mp4");
+            valuesvideos.put(MediaStore.Video.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
+            valuesvideos.put(MediaStore.Video.Media.DATE_TAKEN, System.currentTimeMillis());
+            valuesvideos.put(MediaStore.Video.Media.IS_PENDING, 1);
+            ContentResolver resolver = getContentResolver();
+            //for  [DCIM, Movies, Pictures] use MediaStore.Video.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY) as insert uri
+            Uri uriSavedVideo = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, valuesvideos);
 
-                  ContentValues valuesvideos;
-                  valuesvideos = new ContentValues();
-                  valuesvideos.put(MediaStore.Video.Media.RELATIVE_PATH, "Movies/");
-                  valuesvideos.put(MediaStore.Video.Media.TITLE, videoFileName);
-                  valuesvideos.put(MediaStore.Video.Media.DISPLAY_NAME, videoFileName);
-                  valuesvideos.put(MediaStore.Video.Media.MIME_TYPE, "video/mp4");
-                  valuesvideos.put(MediaStore.Video.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
-                  valuesvideos.put(MediaStore.Video.Media.DATE_TAKEN, System.currentTimeMillis());
-                  valuesvideos.put(MediaStore.Video.Media.IS_PENDING, 1);
-                  ContentResolver resolver = getContentResolver();
-                  Uri collection = MediaStore.Video.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY); 
-                  //all video files on primary external    storage
-                  Uri uriSavedVideo = resolver.insert(collection, valuesvideos);
+            ParcelFileDescriptor pfd;
 
-                  ParcelFileDescriptor pfd;
+            try {
+                pfd = getContentResolver().openFileDescriptor(uriSavedVideo, "w");
+                assert pfd != null;
+                FileOutputStream out = new FileOutputStream(pfd.getFileDescriptor());
+                // Get the already saved video as fileinputstream from here
+                InputStream in = getContentResolver().openInputStream(uri);
+                byte[] buf = new byte[8192];
+                int len;
+                int progress = 0;
+                while ((len = in.read(buf)) > 0) {
+                    progress = progress + len;
+                    out.write(buf, 0, len);
+                }
+                out.close();
+                in.close();
+                pfd.close();
+                valuesvideos.clear();
+                valuesvideos.put(MediaStore.Video.Media.IS_PENDING, 0);
+                valuesvideos.put(MediaStore.Video.Media.IS_PENDING, 0); //only your app can see the files until pending is turned into 0
+                getContentResolver().update(uriSavedVideo, valuesvideos, null, null);
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + videoName);
 
-                  try {
-                      pfd = getContentResolver().openFileDescriptor(uriSavedVideo, "w");
+                MediaScannerConnection.scanFile(this, new String[]{file.getAbsolutePath()}, new String[]{"video/*"}, null);
 
-                      assert pfd != null;
-                      FileOutputStream out = new FileOutputStream(pfd.getFileDescriptor());
-
-                      // Get the already saved video as fileinputstream from here
-                      InputStream in = getContentResolver().openInputStream(uri);
-
-                      byte[] buf = new byte[8192];
-
-                      int len;
-                      int progress = 0;
-                      while ((len = in.read(buf)) > 0) {
-                          progress = progress + len;
-                          out.write(buf, 0, len);
-                      }
-                      out.close();
-                      in.close();
-                      pfd.close();
-                      valuesvideos.clear();
-                      valuesvideos.put(MediaStore.Video.Media.IS_PENDING, 0);
-                      valuesvideos.put(MediaStore.Video.Media.IS_PENDING, 0); //only your app can see the files until pending is turned into 0
-
-                      getContentResolver().update(uriSavedVideo, valuesvideos, null, null);
-                      File file = new File(Environment.getExternalStorageDirectory() + "/Movies/" + videoFileName);
-                      Log.e(TAG, "saveVideo: " + file.getPath());
-                  } catch (Exception e) {
-                      e.printStackTrace();
-                      Log.e(TAG, "saveVideo: " + e.getMessage());
-                  }
-              }
-
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 //open Dir with Doc Tree
