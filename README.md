@@ -1,3 +1,21 @@
+//pager adapter
+
+     class FGPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+              private var fragmentList: MutableList<Fragment> = ArrayList()
+
+              fun add(fragment: Fragment) {
+                  fragmentList.add(fragment)
+              }
+
+              override fun getItem(position: Int): Fragment {
+                  return fragmentList[position]
+              }
+
+              override fun getCount() = fragmentList.size
+          }
+
+
+
 //save vide from tree uri
 
           private void saveVideoFromTreeUri(Uri uri) {
