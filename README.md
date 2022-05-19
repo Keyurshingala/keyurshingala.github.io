@@ -172,6 +172,14 @@
                               pb.setVisibility(View.GONE);
                               t.printStackTrace();
 
+                             Snackbar.make(
+                              root, t instanceof SocketTimeoutException ? "Time out" : somethingWentWrong, Snackbar.LENGTH_INDEFINITE
+                              ).setAction(
+                                   t instanceof SocketTimeoutException ? "Try again" : "dismiss", view -> {
+                                if (t instanceof SocketTimeoutException) {
+                                    callApiWithBar(activity, root, pb, apiCall, serviceGenerator);
+                                }
+                            }).show();
                               Snackbar.make(root, somethingWentWrong, Snackbar.LENGTH_INDEFINITE)
                                       .setAction("Try Again", view -> callApiWithBar(activity, root, pb, apiCall, serviceGenerator)).show();
 
