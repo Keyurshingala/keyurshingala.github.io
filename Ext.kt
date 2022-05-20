@@ -1,15 +1,3 @@
-package com.example.fly.my_utils
-
-import android.util.Log
-import android.view.View
-import android.view.View.*
-import android.widget.ImageView
-import androidx.constraintlayout.utils.widget.ImageFilterView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.example.fly.R
-import com.example.fly.service.cons.TAG
-import com.google.gson.Gson
 
 val g = Gson()
 
