@@ -1,3 +1,8 @@
+//for light mode only
+
+      //in theme
+     <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+
 //pager adapter
 
      class FGPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
