@@ -1,3 +1,8 @@
+//to not change comfiguration
+      
+      in activity tag of manifest file
+      android:configChanges="uiMode"
+
 //for light mode only
 
       //in theme
