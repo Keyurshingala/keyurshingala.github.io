@@ -1,3 +1,52 @@
+//App link assitant steps
+
+      upload .well-known/assetlinks.json folder in website
+      iside assetlinks.json put following	
+      [{
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+          "namespace": "android_app",
+          "package_name": "com.example.yourapp",
+          "sha256_cert_fingerprints":
+          ["98:56:DB:F3:C0:FC:BA: -------------  sha 256 ------------ :B5:13:73:36:4E:53:A6:F3"]
+        }
+      }]
+
+      now in android studio tools>App Link Assistant> click
+
+      1 Add URL intent filters -> put path of assetlinks.json in Check URL Mapping
+            Ex. = https://YourHost.com/.well-known/assetlinks.json
+
+            add activity that will onpen on link click
+
+            and make sure below is in menifst of added activity
+
+            <intent-filter>
+                  <action android:name="android.intent.action.VIEW" />
+
+                      <category android:name="android.intent.category.DEFAULT" />
+                      <category android:name="android.intent.category.BROWSABLE" />
+
+                      <data
+                          android:host="YourHost.com"
+                          android:scheme="https" />
+               </intent-filter>
+
+      2 Add logica t handle the intent -> put below in selected activity
+
+            // ATTENTION: This was auto-generated to handle app links.
+              Intent appLinkIntent = getIntent();
+              String appLinkAction = appLinkIntent.getAction();
+              Uri appLinkData = appLinkIntent.getData();
+
+      3 Associate website -> you will know what to do
+
+      4 Test on device or emulator -> in URL must start with "YourHost.com" after put whatever you want
+            Ex. https://YourHost.com/whatever you want
+
+            That's It!!
+      
+      
 //to not change comfiguration
       
       in activity tag of manifest file
