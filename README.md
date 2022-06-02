@@ -1,3 +1,42 @@
+// AlarmManager
+
+    public void startAlert() {
+        int second = Integer.parseInt(binding.et.getText().toString());
+
+        ((AlarmManager) getSystemService(ALARM_SERVICE))
+                .set(
+                        AlarmManager.RTC_WAKEUP,
+                        System.currentTimeMillis() + (second * 1000L),
+                        PendingIntent.getBroadcast(
+                                getApplicationContext(),
+                                111,
+                                new Intent(this, MyBroadcastReceiver.class),
+                                FLAG_IMMUTABLE)
+                );
+        Toast.makeText(this, "Alarm set in " + second + " seconds", Toast.LENGTH_SHORT).show();
+    }
+
+      public class MyBroadcastReceiver extends BroadcastReceiver {
+
+          @Override
+          public void onReceive(Context context, Intent intent) {
+              rcv();
+          }
+
+          private void rcv() {
+              new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                  Log.i("TAG", "run: ");
+                  rcv();
+              },2000);
+          }
+      }
+
+      in AndroidManifest.xml
+
+      <receiver android:name="MyBroadcastReceiver" />
+
+
+
 //App link assitant steps
 
       upload .well-known/assetlinks.json folder in website
