@@ -406,21 +406,35 @@
 
             private const val BASE_URL = "https://api.unsplash.com/"
 
-            const val AccessKey = "akYdbrQ_RcwiLMcEkHuZND-2FUTsHJ25k42aaaO67N4"
+            const val AccessKey = "akYdbrQ-RcwiLMcEkHuunsplash_2FUTsHJ25k42aaaO67N4"
 
-            object UnsplashClient {
-                val service: SearchApi = Retrofit.Builder()
-                        .baseUrl(BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build().create(SearchApi::class.java)
-            }
+            private var okClient: OkHttpClient = OkHttpClient.Builder().addInterceptor(
+                    Interceptor { chain: Interceptor.Chain ->
+                        val originalRequest = chain.request()
+                        chain.proceed(
+                                originalRequest.newBuilder()
+                                        .addHeader("Cache-Control", "no-cache")
+                                        .method(originalRequest.method, originalRequest.body).build()
+                        )
+                    })
+                    .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))  //todo remove this line in production
+                    .connectTimeout(12, TimeUnit.SECONDS)
+                    .readTimeout(12, TimeUnit.SECONDS)
+                    .build()
+
+            val service: SearchApi = Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(okClient)
+                    .build().create(SearchApi::class.java)
+
 
             interface SearchApi {
                 @GET("search/photos")
-                fun getSearchPhotos(@Query("client_id") clientId: String,
-                                    @Query("orientation") orientation: String,
-                                    @Query("query") searchItem: String?,
-                                    @Query("per_page") itemPerPage: Int): Call<SearchPhoto>
+                suspend fun getSearchPhotos(@Query("client_id") clientId: String,
+                                            @Query("orientation") orientation: String,
+                                            @Query("query") searchItem: String?,
+                                            @Query("per_page") itemPerPage: Int): Response<SearchPhoto>
             }
 
 
