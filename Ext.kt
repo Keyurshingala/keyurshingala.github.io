@@ -1,3 +1,26 @@
+class MyAdapter<T>(private val ctx: Context, private val list: List<T>, private val onClick: (T) -> Unit) : RecyclerView.Adapter<MyAdapter.VH>() {
+
+    override fun onBindViewHolder(holder: VH, pos: Int) {
+        val bind = holder.binding
+        val data = list[pos] as Abc
+        
+        val img = data.s
+        
+        bind.root.setOnClickListener {
+            onClick(list[pos])
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH(RvLayoutBinding.inflate(LayoutInflater.from(parent.context)))
+    class VH(var binding: RvLayoutBinding) : RecyclerView.ViewHolder(binding.root)
+
+    override fun getItemCount() = list.size
+}
+
+data class Abc(var s: String)
+
+
+
 
 val g = Gson()
 
@@ -24,15 +47,6 @@ fun Exception.print() {
 
 fun Any.log() {
     Log.wtf(TAG, "$this")
-}
-
-fun ImageFilterView.load(any: Any?, withCrossFade: Boolean = false) {
-    Glide.with(this).load(any).placeholder(R.drawable.ic_img_loading).error(R.drawable.ic_error).apply {
-        if (withCrossFade)
-            transition(DrawableTransitionOptions.withCrossFade()).into(this@load)
-        else
-            into(this@load)
-    }
 }
 
 fun ImageView.load(any: Any?, withCrossFade: Boolean = false) {
