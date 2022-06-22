@@ -19,6 +19,9 @@ class MyAdapter<T>(private val ctx: Context, private val list: List<T>, private 
 
 data class Abc(var s: String)
 
+//-----
+data class Tp<out Z, out B, out C>(val first: Z, val second: B, val third: C) //just Demo Exp. cals can be made this way also
+//-----
 
 
 
@@ -26,6 +29,19 @@ val g = Gson()
 
 fun Any.toGson() {
     g.toJson(this)
+}
+
+fun Exception.print() {
+    printStackTrace()
+    (message + " | " + stackTrace[0].toString() + " | " + javaClass.name).log()
+}
+
+fun Any?.log() {
+    try {
+        Log.wtf(TAG, "$this")
+    } catch (e: Exception) {
+        e.print()
+    }
 }
 
 fun View.visible() {
@@ -38,15 +54,6 @@ fun View.gon() {
 
 fun View.invisible() {
     this.visibility = INVISIBLE
-}
-
-fun Exception.print() {
-    this.printStackTrace()
-    (this.message + " | " + this.stackTrace[1].toString() + " | " + this.javaClass.name).log()
-}
-
-fun Any.log() {
-    Log.wtf(TAG, "$this")
 }
 
 fun ImageView.load(any: Any?, withCrossFade: Boolean = false) {
