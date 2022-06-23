@@ -18,6 +18,7 @@
                 dif += 1800000 //for 1 hour make it 3600000
             }
             
+            // currentDate
             fun startDate(): String = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(Date())
 
             //gives HH:00 or HH:30 only (Ex. 01:30, 02:00 etc..)
