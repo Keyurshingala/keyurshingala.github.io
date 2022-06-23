@@ -28,8 +28,9 @@
                     return if (it.toInt() > 30) (h+1)+":00" else "$h:30"
                 }
             }
-
-
+            
+            //extras
+            fun getSpecificTimeInMillis() : Long = SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.ENGLISH).parse(startDate() + " 11:30:00 pm")!!.time
 
 
 // AlarmManager
