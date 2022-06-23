@@ -1,3 +1,37 @@
+//make list of time interval
+
+            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH)
+
+            val dateStart = sdf.parse("${startDate()} ${startHm()}") as Date
+            val dateEnd = sdf.parse("${startDate()} 24:00") as Date
+
+            ("Date Start: $dateStart").log()
+            ("Date End: $dateEnd").log()
+
+            var list = arrayListOf<String>()
+
+            var dif: Long = dateStart.time
+            while (dif < dateEnd.time) {
+                val slot = SimpleDateFormat("HH:mm", Locale.ENGLISH).format(Date(dif))
+                "Hour Slot --> $slot".log()
+                list.add(slot)
+                dif += 1800000 //for 1 hour make it 3600000
+            }
+            
+            fun startDate(): String = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(Date())
+
+            //gives HH:00 or HH:30 only (Ex. 01:30, 02:00 etc..)
+            fun startHm(): String {
+                val h = SimpleDateFormat("HH", Locale.ENGLISH).format(Date())
+
+                SimpleDateFormat("mm", Locale.ENGLISH).format(Date()).let {
+                    return if (it.toInt() > 30) (h+1)+":00" else "$h:30"
+                }
+            }
+
+
+
+
 // AlarmManager
 
     public void startAlert() {
