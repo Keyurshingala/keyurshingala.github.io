@@ -36,13 +36,20 @@ fun Exception.print() {
     (message + " | " + stackTrace[0].toString() + " | " + javaClass.name).log()
 }
 
-fun Any?.log() {
+fun <T> T.log() {
     try {
         Log.wtf(TAG, "$this")
     } catch (e: Exception) {
         e.print()
     }
 }
+
+//use it inside BaseAc
+fun <T> T.tos() {
+        Toast.makeText(this@Base, "$this", Toast.LENGTH_SHORT).show()
+    }
+
+
 
 fun View.visible() {
     this.visibility = VISIBLE
