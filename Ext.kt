@@ -69,6 +69,14 @@ fun ImageView.load(any: Any?, withCrossFade: Boolean = false) {
     }
 }
 
+/** if dose not work call this method inside View.post() method **/
+fun View.toBmp(): Bitmap {
+    val b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    layout(left, top, right, bottom)
+    draw(Canvas(b))
+    return b
+}
+
 
 
 
