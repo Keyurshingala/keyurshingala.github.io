@@ -45,10 +45,7 @@ fun <T> T.log() {
 }
 
 //use it inside BaseAc
-fun <T> T.tos() {
-        Toast.makeText(this@Base, "$this", Toast.LENGTH_SHORT).show()
-    }
-
+fun <T> T.tos() = Toast.makeText(this, "$this", Toast.LENGTH_SHORT).show()
 
 
 fun View.visible() {
