@@ -1,3 +1,37 @@
+//pick font and copy to catch dir
+
+                         val fontLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                                if (result.resultCode == Activity.RESULT_OK) {
+
+                                    val uri: Uri = result.data!!.data!!
+                                    val source = File(FileUtils.getPath(requireActivity(), uri))
+                                    val destination = File(requireActivity().cacheDir.absolutePath + "/font/" + source.name)
+
+                                    if (destination.exists() && destination.length() != 0L)
+                                        "File exists".tos()
+
+                                    else {
+                                        File(destination.parent!!).let { if (!it.exists()) it.mkdir() }
+                                        destination.createNewFile()
+
+                                        requireActivity().contentResolver.openInputStream(uri).use { inputStream ->
+                                            destination.outputStream().use { output ->
+                                                inputStream!!.copyTo(output)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            bind.btnAddFont.setOnClickListener {
+                                fontLauncher.launch(
+                                        Intent(Intent.ACTION_GET_CONTENT)
+                                                .setType("*/*")
+                                                .putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("font/ttf", "font/otf", "application/vnd.ms-fontobject",                                                         "font/woff", "font/woff2"))
+                                )
+                            }
+                
+
 //make list of time interval
 
             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH)
