@@ -27,7 +27,7 @@
                                 fontLauncher.launch(
                                         Intent(Intent.ACTION_GET_CONTENT)
                                                 .setType("*/*")
-                                                .putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("font/ttf", "font/otf", "application/vnd.ms-fontobject",                                                         "font/woff", "font/woff2"))
+                                                .putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("font/ttf", "font/otf", "application/vnd.ms-fontobject",   "font/woff", "font/woff2"))
                                 )
                             }
                 
