@@ -78,5 +78,37 @@ fun View.toBmp(): Bitmap {
 }
 
 
+ private fun pickAndAddImg() {
+        launcher.launch(Intent.createChooser(Intent(Intent.ACTION_GET_CONTENT).setType("image/*"), "Select Picture"))
+ }
+
+private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == RESULT_OK) {
+            val uri: Uri = result.data!!.data!!
+
+            val destination = File(filesDir.absolutePath + "/MyLogo/" + uri.path!!.split("/").last())
+
+            if (destination.exists() && destination.length() != 0L)
+                tos("Logo already added")
+
+            else {
+                File(destination.parent!!).let { if (!it.exists()) it.mkdir() }
+
+                destination.createNewFile()
+                destination.setLastModified(System.currentTimeMillis())
+
+                contentResolver.openInputStream(uri).use { inputStream ->
+                    destination.outputStream().use { output ->
+                        inputStream!!.copyTo(output)
+
+                        MyManager.setMyLogo(destination.path)
+                        setMyLogo()
+                        tos("Logo Added")
+                    }
+                }
+            }
+        }
+    }
+
 
 
