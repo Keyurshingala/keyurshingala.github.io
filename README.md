@@ -4,8 +4,8 @@
                                 if (result.resultCode == Activity.RESULT_OK) {
 
                                     val uri: Uri = result.data!!.data!!
-                                    val source = File(FileUtils.getPath(requireActivity(), uri))
-                                    val destination = File(requireActivity().cacheDir.absolutePath + "/font/" + source.name)
+                                   // val source = File(FileUtils.getPath(requireActivity(), uri))
+                                    val destination = File(requireActivity().cacheDir.absolutePath + "/font/" + uri.path!!.split("/").last())
 
                                     if (destination.exists() && destination.length() != 0L)
                                         "File exists".tos()
