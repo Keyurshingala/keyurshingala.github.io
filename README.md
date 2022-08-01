@@ -1,3 +1,23 @@
+//image loading with progressbasr or gif
+
+            val cpd = CircularProgressDrawable(this)
+            cpd.strokeWidth = 5f
+            cpd.centerRadius = 30f
+            cpd.setColorSchemeColors(Color.GREEN,Color.CYAN,Color.LTGRAY)
+            cpd.start()
+
+            Glide.with(this)
+                    .load("https://preview.redd.it/c3uhsgo1vx541.jpg?auto=webp&s=a45b583ebf921d3ad1649e77ad05e55226140120")
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .placeholder(cpd)                                    // comment when applying gif
+    //              .thumbnail(Glide.with(activity).load("https://i.gifer.com/ZKZx.gif"))   //for gif
+    //              .fitCenter()                                         //may be optional
+                    .error(R.drawable.liked)
+                    .into(bind.iv)
+
+
+
 //pick font and copy to catch dir
 
                          val fontLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
