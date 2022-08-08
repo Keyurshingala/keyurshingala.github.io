@@ -32,16 +32,19 @@ fun Any.toGson() {
 }
 
 fun Exception.print() {
-    printStackTrace()
-    (message + " | " + stackTrace[0].toString() + " | " + javaClass.name).log()
+    if (BuildConfig.DEBUG) {
+        printStackTrace()
+        "$message | ${stackTrace[0]} | ${javaClass.name}".log()
+    }
 }
 
 fun <T> T.log() {
-    try {
-        Log.wtf(TAG, "$this")
-    } catch (e: Exception) {
-        e.print()
-    }
+    if (BuildConfig.DEBUG)
+        try {
+            Log.wtf(TAG, "$this")
+        } catch (e: Exception) {
+            e.print()
+        }
 }
 
 //use it inside BaseAc
