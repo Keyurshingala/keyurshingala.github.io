@@ -307,7 +307,7 @@
                                   serviceGenerator.OnSuccess(response.body());
 
                               } else {
-                                  Snackbar.make(root, somethingWentWrong, Snackbar.LENGTH_INDEFINITE)
+                                  Snackbar.make(activity.findViewById(android.R.id.content), somethingWentWrong, Snackbar.LENGTH_INDEFINITE)
                                           .setAction("Try Again", view -> callApiWithDialog(activity, root, apiCall, serviceGenerator)).show();
                               }
                           }
@@ -317,7 +317,7 @@
                               dismissProgress();
                               t.printStackTrace();
 
-                              Snackbar.make(root, somethingWentWrong, Snackbar.LENGTH_INDEFINITE)
+                              Snackbar.make(activity.findViewById(android.R.id.content), somethingWentWrong, Snackbar.LENGTH_INDEFINITE)
                                       .setAction("Try Again", view -> callApiWithDialog(activity, root, apiCall, serviceGenerator)).show();
 
                           }
@@ -350,7 +350,7 @@
                                   serviceGenerator.OnSuccess(response.body());
 
                               } else {
-                                  Snackbar.make(root, somethingWentWrong, Snackbar.LENGTH_INDEFINITE)
+                                  Snackbar.make(activity.findViewById(android.R.id.content), somethingWentWrong, Snackbar.LENGTH_INDEFINITE)
                                           .setAction("Try Again", view -> callApiWithBar(activity, root, pb, apiCall, serviceGenerator)).show();
                               }
                           }
@@ -368,7 +368,7 @@
                                     callApiWithBar(activity, root, pb, apiCall, serviceGenerator);
                                 }
                             }).show();
-                              Snackbar.make(root, somethingWentWrong, Snackbar.LENGTH_INDEFINITE)
+                              Snackbar.make(activity.findViewById(android.R.id.content), somethingWentWrong, Snackbar.LENGTH_INDEFINITE)
                                       .setAction("Try Again", view -> callApiWithBar(activity, root, pb, apiCall, serviceGenerator)).show();
 
                           }
