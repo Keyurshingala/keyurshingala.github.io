@@ -1,4 +1,5 @@
 //emulator detection
+    
     //by facebook
     @JvmStatic
     fun isEmulator(): Boolean {
