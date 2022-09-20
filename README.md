@@ -1,5 +1,20 @@
+//emulator detection
+    //by facebook
+    @JvmStatic
+    fun isEmulator(): Boolean {
+      return Build.FINGERPRINT.startsWith("generic") ||
+          Build.FINGERPRINT.startsWith("unknown") ||
+          Build.MODEL.contains("google_sdk") ||
+          Build.MODEL.contains("Emulator") ||
+          Build.MODEL.contains("Android SDK built for x86") ||
+          Build.MANUFACTURER.contains("Genymotion") ||
+          Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic") ||
+          "google_sdk" == Build.PRODUCT
+    }
+
 //root detedction
 
+    //by oneSignal
     static boolean isRooted() {
         String[] places = new String[]{"/sbin/", "/system/bin/", "/system/xbin/", "/data/local/xbin/", "/data/local/bin/", "/system/sd/xbin/",                                                  "/system/bin/failsafe/", "/data/local/"};
 
@@ -17,6 +32,25 @@
         }
         return false;
     }
+    
+    //by crashlytics
+    public static boolean isRooted(Context context) {
+        boolean isEmulator = isEmulator(context);
+        String buildTags = Build.TAGS;
+        if (!isEmulator && buildTags != null && buildTags.contains("test-keys")) {
+            return true;
+        } else {
+            File file = new File("/system/app/Superuser.apk");
+            if (file.exists()) {
+                return true;
+            } else {
+                file = new File("/system/xbin/su");
+                return !isEmulator && file.exists();
+            }
+        }
+    }
+    
+    
 
 //image loading with progressbasr or gif
 
