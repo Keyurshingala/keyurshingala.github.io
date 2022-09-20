@@ -1,3 +1,23 @@
+//root detedction
+
+    static boolean isRooted() {
+        String[] places = new String[]{"/sbin/", "/system/bin/", "/system/xbin/", "/data/local/xbin/", "/data/local/bin/", "/system/sd/xbin/",                                                  "/system/bin/failsafe/", "/data/local/"};
+
+        try {
+            String[] var1 = places;
+            int var2 = places.length;
+
+            for(int var3 = 0; var3 < var2; ++var3) {
+                String where = var1[var3];
+                if ((new File(where + "su")).exists()) {
+                    return true;
+                }
+            }
+        } catch (Throwable var5) {
+        }
+        return false;
+    }
+
 //image loading with progressbasr or gif
 
             val cpd = CircularProgressDrawable(this)
