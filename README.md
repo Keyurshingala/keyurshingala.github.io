@@ -29,7 +29,7 @@
         }
 
         return haveConnectedWifi || haveConnectedMobile;
-    }
+        }
     
         public boolean isCertificateInstall() {
         String iface = "";
