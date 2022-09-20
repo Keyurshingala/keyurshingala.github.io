@@ -1,3 +1,55 @@
+//check net vpn proxy
+
+        public boolean hasInternetConnect() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (cm.getNetworkCapabilities(cm.getActiveNetwork()).hasTransport(NetworkCapabilities.TRANSPORT_VPN)) return false;
+
+        if (cm.getDefaultProxy() != null) return false;
+
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+
+        if (isCertificateInstall()) return false;
+
+        if (haveConnectedWifi || haveConnectedMobile) {
+
+        } else {
+            tos("Network Not Available");
+        }
+
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+    
+        public boolean isCertificateInstall() {
+        String iface = "";
+        try {
+            for (NetworkInterface networkInterface : Collections.list(NetworkInterface.getNetworkInterfaces())) {
+                if (networkInterface.isUp())
+                    iface = networkInterface.getName();
+                if (iface.contains("tun") || iface.contains("ppp") || iface.contains("pptp")) {
+                    return true;
+                }
+            }
+        } catch (SocketException e1) {
+            e1.printStackTrace();
+            return false;
+        }
+
+        return false;
+        }
+        
+
 //emulator detection
     
     //by facebook
