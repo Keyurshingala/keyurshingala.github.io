@@ -1,3 +1,14 @@
+//check if srvice is running or not
+
+        fun isServiceRunning(ctx: Context, serviceClass: Class<*>): Boolean {
+            for (service in (ctx.getSystemService(AppCompatActivity.ACTIVITY_SERVICE) as ActivityManager).getRunningServices(Int.MAX_VALUE)) {
+                if (serviceClass.name == service.service.className) return true
+            }
+            return false
+        }
+        
+        
+
 //check net vpn proxy
 
         public boolean hasInternetConnect() {
