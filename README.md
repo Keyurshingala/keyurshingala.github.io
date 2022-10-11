@@ -1,3 +1,25 @@
+//download with notification
+
+    private fun enqueueDownload(context: Context) {
+        val fileName = "${System.currentTimeMillis()}.png"
+        val destination = "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).path}/$fileName"
+
+        val file = File(destination)
+        if (file.exists()) file.delete()
+
+        val request = DownloadManager.Request(Uri.parse(url))
+                .setMimeType("*/*")
+                .setTitle(fileName)
+                .setDescription("downloading")
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationUri(Uri.parse("file://$destination"))
+
+        (getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
+        "downloading".tosL()
+    }
+
+
 //check if srvice is running or not
 
         fun isServiceRunning(ctx: Context, serviceClass: Class<*>): Boolean {
