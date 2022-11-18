@@ -323,8 +323,17 @@
 
 //for light mode only
 
-      //in theme
-     <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+      //themes.xml
+      //Base application theme
+      <style name="Theme.App" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+      
+      <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+      
+      //AndroidManifest.xml
+      <activity
+      android:configChanges="uiMode">
+      ...
+      </activity>
 
 //pager adapter
 
