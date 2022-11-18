@@ -314,12 +314,6 @@
             Ex. https://YourHost.com/whatever you want
 
             That's It!!
-      
-      
-//to not change comfiguration
-      
-      in activity tag of manifest file
-      android:configChanges="uiMode"
 
 //for light mode only
 
