@@ -1,3 +1,18 @@
+//for round corners bottomsheet
+    
+    in theme 
+    <item name="dialogCornerRadius">@dimen/_16sdp</item>
+    
+    on init of dialog
+    val dialog = BottomSheetDialog(activity)
+        dialog.setContentView(root)
+        dialog.window?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)?.setBackgroundResource(android.R.color.transparent)
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.show()
+
+    on bg of root of xml file
+    android:background="@color/transparent"
+
 //collapsing toolbar
 
     <?xml version="1.0" encoding="utf-8"?>
