@@ -1,3 +1,19 @@
+//Ext function to save bitmap 80% jpeg (only for bitmap which are not transparent by any pixels)
+
+    fun Bitmap.toJpg80(ctx: Context): File {
+    val myDir = File("${ctx.filesDir}", tempTabImg)
+    if (!myDir.exists()) myDir.mkdir()
+
+    val file = File(myDir, "${System.currentTimeMillis()}.jpeg")
+    if (file.exists()) file.delete()
+
+    FileOutputStream(file).use { os -> compress(Bitmap.CompressFormat.JPEG, 80, os) }
+
+    return file
+    }
+    
+    
+
 //some common ktx deps and its reference 
 
     //https://developer.android.com/kotlin/ktx
