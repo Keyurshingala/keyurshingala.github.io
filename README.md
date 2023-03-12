@@ -1,3 +1,19 @@
+//some common ktx deps and its reference 
+
+    //https://developer.android.com/kotlin/ktx
+    //https://developer.android.com/kotlin/ktx/extensions-list
+    implementation "androidx.collection:collection-ktx:1.2.0"
+    implementation "androidx.fragment:fragment-ktx:1.5.5"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.0"
+    implementation "androidx.palette:palette-ktx:1.0.0" //color palettes.
+    implementation "androidx.room:room-ktx:2.5.0"
+    implementation "androidx.sqlite:sqlite-ktx:2.3.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0"
+    implementation "androidx.work:work-runtime-ktx:2.8.0"
+    implementation "androidx.activity:activity-ktx:1.6.1"
+
+
 //for round corners bottomsheet
     
     in theme 
