@@ -34,6 +34,9 @@
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0"
     implementation "androidx.work:work-runtime-ktx:2.8.0"
     implementation "androidx.activity:activity-ktx:1.6.1"
+    //extra
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
 
 
 //for round corners bottomsheet
