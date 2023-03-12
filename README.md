@@ -1,7 +1,13 @@
+//to set dynamically build apk name
+
+    archivesBaseName = "YourAppName${(System.currentTimeMillis()/1000).toInteger()}_v${versionCode}"
+
+    
+
 //Ext function to save bitmap 80% jpeg (only for bitmap which are not transparent by any pixels)
 
     fun Bitmap.toJpg80(ctx: Context): File {
-    val myDir = File("${ctx.filesDir}", tempTabImg)
+    val myDir = File("${ctx.filesDir}", tempImgDir)
     if (!myDir.exists()) myDir.mkdir()
 
     val file = File(myDir, "${System.currentTimeMillis()}.jpeg")
